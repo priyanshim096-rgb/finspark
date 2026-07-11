@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SentinelX Quantum Intelligence Platform</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Vis.js Network CDN -->
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  <!-- FontAwesome for Cyber Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Style Rules -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-[#05070f] text-slate-200">
+
+  <div class="app-container">
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo"></div>
+        <h1>SENTINELX</h1>
+      </div>
+      
+      <ul class="nav-links flex-1">
+        <li class="nav-item active" data-target="view-summary">
+          <i class="fa-solid fa-chart-line text-lg"></i>
+          <span>Executive Summary</span>
+        </li>
+        <li class="nav-item" data-target="view-graph">
+          <i class="fa-solid fa-circle-nodes text-lg"></i>
+          <span>Live Attack Graph</span>
+        </li>
+        <li class="nav-item" data-target="view-simulator">
+          <i class="fa-solid fa-flask text-lg"></i>
+          <span>Threat Simulator</span>
+        </li>
+        <li class="nav-item" data-target="view-quantum">
+          <i class="fa-solid fa-shield-halved text-lg"></i>
+          <span>Quantum Risk Hub</span>
+        </li>
+        <li class="nav-item" data-target="view-copilot">
+          <i class="fa-solid fa-terminal text-lg"></i>
+          <span>AI Copilot Chat</span>
+        </li>
+        <li class="nav-item" data-target="view-actions">
+          <i class="fa-solid fa-bolt-lightning text-lg"></i>
+          <span>Autonomous Actions</span>
+        </li>
+      </ul>
+      
+      <div class="border-t border-slate-800 pt-4 mt-auto text-xs text-slate-500">
+        <div>Version 2026.1-QSAFE</div>
+        <div>Zero-Trust SEC/PQC Enforcement</div>
+      </div>
+    </aside>
+
+    <!-- Right Workspace Area -->
+    <main class="workspace">
+      <!-- Top Status Header -->
+      <header class="top-bar">
+        <div class="flex items-center gap-4">
+          <span class="text-sm tracking-wider text-slate-400 font-mono">NODE STATUS:</span>
+          <span class="flex items-center gap-2 text-emerald-400 font-mono text-xs bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
+            <span class="h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
+            7 AGENTS SYNCHRONIZED
+          </span>
+        </div>
+        <div class="flex items-center gap-6">
+          <button id="btn-reset-sim" class="text-xs font-mono text-rose-400 bg-rose-950/20 border border-rose-800/40 hover:bg-rose-950/40 px-3 py-1.5 rounded transition">
+            <i class="fa-solid fa-rotate-left mr-1"></i> RESET PLATFORM
+          </button>
+          <div class="text-xs font-mono text-slate-400" id="current-system-time"></div>
+        </div>
+      </header>
+
+      <!-- VIEW 1: EXECUTIVE SUMMARY -->
+      <section id="view-summary" class="dashboard-view active">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold tracking-tight">Executive Bank Trust Overview</h2>
+          <span class="text-slate-400 text-sm font-mono" id="summary-step-indicator">Step 0/6 (Baseline)</span>
+        </div>
+
+        <!-- 7 Category Metrics Cards -->
+        <div class="metrics-grid">
+          <div class="glass-panel metric-card">
+            <span class="metric-title"><i class="fa-solid fa-circle-check text-emerald-400 mr-1.5"></i> Overall Trust Score</span>
+            <div id="metric-trust" class="metric-value neon-green">95.0</div>
+            <div class="text-xs text-slate-500 mt-2">Overall safety rating of the bank</div>
+          </div>
+          <div class="glass-panel metric-card">
+            <span class="metric-title"><i class="fa-solid fa-triangle-exclamation text-rose-400 mr-1.5"></i> Active threats linked together</span>
+            <div id="metric-threat" class="metric-value neon-red">5.0</div>
+            <div class="text-xs text-slate-500 mt-2">Suspicious activities linked together</div>
+          </div>
+          <div class="glass-panel metric-card">
+            <span class="metric-title"><i class="fa-solid fa-sack-dollar text-amber-400 mr-1.5"></i> Unusual Money Transfers</span>
+            <div id="metric-fraud" class="metric-value neon-amber">2.0</div>
+            <div class="text-xs text-slate-500 mt-2">Score for unusual transaction behavior</div>
+          </div>
+          <div class="glass-panel metric-card">
+            <span class="metric-title"><i class="fa-solid fa-atom text-sky-400 mr-1.5"></i> Encryption Weaknesses (HNDL)</span>
+            <div id="metric-quantum" class="metric-value neon-blue">10.0</div>
+            <div class="text-xs text-slate-500 mt-2">Data vulnerable to future decoding (Harvest Now, Decrypt Later)</div>
+          </div>
+          <div class="glass-panel metric-card">
+            <span class="metric-title"><i class="fa-solid fa-fingerprint text-purple-400 mr-1.5"></i> Employee Identity Certainty</span>
+            <div id="metric-identity" class="metric-value neon-green">98.0</div>
+            <div class="text-xs text-slate-500 mt-2">How sure we are that users are who they say they are</div>
+          </div>
+        </div>
+
+        <!-- Double Column Analytics -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          <!-- Active Attack Stories (2 Cols) -->
+          <div class="glass-panel p-6 lg:col-span-2 flex flex-col">
+            <h3 class="text-lg font-semibold mb-4 flex items-center gap-2 text-rose-400">
+              <i class="fa-solid fa-book-open"></i> Hacking Incident Summary & Timeline
+            </h3>
+            <div class="flex-1 flex flex-col justify-center items-center text-slate-500 p-6" id="no-incidents-msg">
+              <i class="fa-solid fa-shield-cat text-4xl mb-3 text-slate-600"></i>
+              <p class="text-sm font-mono">No suspicious activities detected. The bank is currently safe.</p>
+            </div>
+            
+            <!-- Dynamic Incident Container -->
+            <div id="incident-container" class="hidden flex-1 space-y-4">
+              <div class="border border-rose-900/30 bg-rose-950/5 p-4 rounded-lg">
+                <div class="flex justify-between items-start mb-2">
+                  <h4 class="font-bold text-rose-300 text-md" id="inc-title">-</h4>
+                  <span class="badge badge-critical" id="inc-severity">-</span>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4 text-xs font-mono mb-4 py-2 border-y border-slate-800">
+                  <div><span class="text-slate-500">ROOT CAUSE:</span> <span id="inc-rc" class="text-slate-300">-</span></div>
+                  <div><span class="text-slate-500">HACKER CODES:</span> <span id="inc-mitre" class="text-red-400">-</span></div>
+                  <div><span class="text-slate-500">CONFIDENCE:</span> <span id="inc-confidence" class="text-yellow-400">-</span></div>
+                  <div><span class="text-slate-500">AFFECTED ASSETS:</span> <span id="inc-assets" class="text-slate-300">-</span></div>
+                </div>
+
+                <div class="mb-4">
+                  <div class="text-xs text-slate-400 font-mono mb-2">TIMELINE OF SUSPICIOUS EVENTS:</div>
+                  <ol class="list-decimal list-inside space-y-1 text-xs text-slate-300" id="inc-evidence"></ol>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 text-xs">
+                  <div class="p-3 bg-slate-900/50 rounded border border-slate-800">
+                    <div class="font-bold text-slate-400 mb-1">WHAT THE HACKER MIGHT TRY NEXT</div>
+                    <p class="text-slate-300" id="inc-next">-</p>
+                  </div>
+                  <div class="p-3 bg-slate-900/50 rounded border border-slate-800">
+                    <div class="font-bold text-slate-400 mb-1">HOW THIS COULD HAVE BEEN PREVENTED</div>
+                    <p class="text-slate-300" id="inc-counterfactual">-</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions & Simulation Control (1 Col) -->
+          <div class="glass-panel p-6 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-semibold mb-4 text-slate-300 flex items-center gap-2">
+                <i class="fa-solid fa-gamepad"></i> Simulation Sandbox
+              </h3>
+              <p class="text-xs text-slate-400 mb-6">
+                SentinelX helps security teams step through simulated cyber attacks and fraud events in real-time.
+              </p>
+              
+              <div class="p-4 bg-slate-900/60 rounded-lg border border-slate-800 mb-6">
+                <div class="text-xs text-slate-500 uppercase tracking-widest font-mono mb-2">Current Simulation Step</div>
+                <div id="sim-step-title" class="font-semibold text-sm text-slate-200 mb-2">Baseline Configuration</div>
+                <p id="sim-step-desc" class="text-xs text-slate-400">Normal employee logins, valid certificates, standard transactional profiles.</p>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <button id="btn-advance-sim" class="w-full bg-blue-600 hover:bg-blue-500 text-slate-100 font-bold py-2.5 px-4 rounded text-sm transition font-mono flex justify-center items-center gap-2">
+                <i class="fa-solid fa-play"></i> RUN NEXT STEP OF ATTACK
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Entity Risk Table -->
+        <div class="glass-panel p-6">
+          <h3 class="text-lg font-semibold mb-4 text-slate-300"><i class="fa-solid fa-users mr-1.5"></i> Risk Scores for Employees, Devices, and Servers</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="border-b border-slate-800 text-slate-400 font-mono">
+                  <th class="py-3 px-4">Name / ID</th>
+                  <th class="py-3 px-4">Type</th>
+                  <th class="py-3 px-4">Trust Score</th>
+                  <th class="py-3 px-4">Threat Rating</th>
+                  <th class="py-3 px-4">Fraud Risk</th>
+                  <th class="py-3 px-4">Future Decryption Risk</th>
+                  <th class="py-3 px-4">Identity Certainty</th>
+                  <th class="py-3 px-4">Business Impact Risk</th>
+                </tr>
+              </thead>
+              <tbody id="risk-profiles-table-body" class="divide-y divide-slate-800/50">
+                <!-- Loaded dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2: LIVE ATTACK GRAPH -->
+      <section id="view-graph" class="dashboard-view">
+        <h2 class="text-2xl font-bold mb-2">Interactive Visual Map of Bank Connections</h2>
+        <p class="text-sm text-slate-400 mb-6 font-mono">SHOWING REAL-TIME RELATIONSHIPS BETWEEN TRANSACTIONS, EMPLOYEES, DEVICES, AND CERTIFICATES</p>
+        
+        <div class="glass-panel p-6 mb-6">
+          <div id="graph-container">
+            <div class="graph-overlay-status font-mono" id="graph-meta">NODES: 11 | EDGES: 6</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="glass-panel p-6">
+            <h3 class="text-md font-semibold mb-3 text-slate-300">How the Connection Map Works</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Instead of showing alerts one by one, SentinelX maps how data and money flow between computers, accounts, and security keys. If one laptop gets compromised (for example, by running hacker scripts), the system automatically follows the path to see which servers or bank accounts are now in danger and alerts the security team.
+            </p>
+          </div>
+          <div class="glass-panel p-6">
+            <h3 class="text-md font-semibold mb-3 text-slate-300">Live Activity Log of Connections</h3>
+            <ul class="text-xs font-mono space-y-2 text-slate-400 max-h-40 overflow-y-auto" id="active-edges-list">
+              <!-- Loaded dynamically -->
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 3: THREAT SIMULATOR / WHAT-IF -->
+      <section id="view-simulator" class="dashboard-view">
+        <h2 class="text-2xl font-bold mb-2">Hacking Simulation Area</h2>
+        <p class="text-sm text-slate-400 mb-6 font-mono">RUN SIMULATED ATTACKS TO SEE HOW AUTOMATIC DEFENSES RESPOND</p>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Scenarios list -->
+          <div class="glass-panel p-6 space-y-4">
+            <h3 class="text-md font-semibold text-slate-300"><i class="fa-solid fa-layer-group text-blue-400"></i> Hacking Scenarios</h3>
+            
+            <div class="p-3 bg-slate-900 border border-slate-700/60 rounded cursor-pointer hover:border-blue-500 transition">
+              <h4 class="font-bold text-xs text-blue-400 mb-1">BANK DATA THEFT & ENCRYPTION ATTACK</h4>
+              <p class="text-[11px] text-slate-400">Stealing money and security keys by targeting large wire transfers and capturing passwords from memory.</p>
+            </div>
+            
+            <div class="p-3 bg-slate-900/40 border border-slate-800 rounded opacity-60">
+              <h4 class="font-bold text-xs text-slate-400 mb-1">RAPID SMALL-FRAUD BURSTS (SMURFING)</h4>
+              <p class="text-[11px] text-slate-500">A pattern of sending many small transactions very quickly to avoid hitting large fraud alarm limits.</p>
+            </div>
+            
+            <div class="p-3 bg-slate-900/40 border border-slate-800 rounded opacity-60">
+              <h4 class="font-bold text-xs text-slate-400 mb-1">INTERNAL EMPLOYEE BEHAVIOR ANOMALY</h4>
+              <p class="text-[11px] text-slate-500">Using credentials at strange hours and typing in a different pattern than normal.</p>
+            </div>
+          </div>
+
+          <!-- Simulator Progress Panel -->
+          <div class="glass-panel p-6 lg:col-span-2 flex flex-col justify-between">
+            <div>
+              <h3 class="text-md font-semibold text-slate-300 mb-4 flex items-center justify-between">
+                <span>Steps of the Active Hack</span>
+                <span class="text-xs text-slate-500 font-mono" id="sim-progress-indicator">Step 0/6</span>
+              </h3>
+              
+              <div class="relative pl-8 border-l border-slate-800 space-y-6" id="simulator-steps-progress">
+                <!-- Dynamically filled with step checklists -->
+              </div>
+            </div>
+            
+            <div class="mt-6 border-t border-slate-800/80 pt-4 flex gap-4">
+              <button id="btn-advance-sim-tab" class="flex-1 bg-blue-600 hover:bg-blue-500 text-slate-100 font-bold py-2 px-4 rounded text-xs transition font-mono">
+                RUN NEXT STEP OF ATTACK
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 4: QUANTUM RISK HUB -->
+      <section id="view-quantum" class="dashboard-view">
+        <h2 class="text-2xl font-bold mb-2">Future Security & Digital Lock Inventory</h2>
+        <p class="text-sm text-slate-400 mb-6 font-mono">TRACKING UPGRADES TO NEXT-GENERATION DIGITAL LOCKS TO PREVENT FUTURE DATA DECRYPTION RISKS</p>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
+          <div class="glass-panel p-5 text-center">
+            <span class="text-xs text-slate-500 font-mono block mb-1">NEXT-GEN ENCRYPTION UPGRADE STATUS</span>
+            <span class="text-3xl font-extrabold text-blue-400 font-mono" id="q-ready-index">45.8%</span>
+            <div class="w-full bg-slate-900 rounded-full h-1.5 mt-3">
+              <div class="bg-blue-500 h-1.5 rounded-full" style="width: 45.8%"></div>
+            </div>
+          </div>
+          <div class="glass-panel p-5 text-center">
+            <span class="text-xs text-slate-500 font-mono block mb-1">RISK OF FUTURE DECRYPTION (HNDL)</span>
+            <span class="text-3xl font-extrabold text-rose-500 font-mono" id="q-harvest-risk">72.4%</span>
+            <div class="w-full bg-slate-900 rounded-full h-1.5 mt-3">
+              <div class="bg-rose-500 h-1.5 rounded-full" style="width: 72.4%"></div>
+            </div>
+          </div>
+          <div class="glass-panel p-5 text-center">
+            <span class="text-xs text-slate-500 font-mono block mb-1">UPGRADE URGENCY RATING</span>
+            <span class="text-3xl font-extrabold text-amber-500 font-mono" id="q-migration-priority">85.0</span>
+            <div class="w-full bg-slate-900 rounded-full h-1.5 mt-3">
+              <div class="bg-amber-500 h-1.5 rounded-full" style="width: 85%"></div>
+            </div>
+          </div>
+          <div class="glass-panel p-5 text-center">
+            <span class="text-xs text-slate-500 font-mono block mb-1">NEXT-GEN LOCK TYPE IN USE</span>
+            <span class="text-3xl font-extrabold text-emerald-400 font-mono">Kyber768</span>
+            <div class="text-[10px] text-slate-500 mt-2 font-mono">Active lattice backup channels</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          <div class="glass-panel p-6 lg:col-span-2">
+            <h3 class="text-md font-semibold text-slate-300 mb-4"><i class="fa-solid fa-vault mr-1.5 text-cyan-400"></i> Digital Lock & Security Certificate List</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr class="border-b border-slate-800 text-slate-400 font-mono">
+                    <th class="py-2 px-3">Key / Certificate ID</th>
+                    <th class="py-2 px-3">Lock Type (Algorithm)</th>
+                    <th class="py-2 px-3">Lock Strength (Key Size)</th>
+                    <th class="py-2 px-3">Security Protocol (TLS)</th>
+                    <th class="py-2 px-3">Future Decryption Risk</th>
+                    <th class="py-2 px-3">Upgrade Urgency</th>
+                  </tr>
+                </thead>
+                <tbody id="quantum-inventory-table-body" class="divide-y divide-slate-800/40">
+                  <!-- Loaded dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="glass-panel p-6 flex flex-col justify-between">
+            <div>
+              <h3 class="text-md font-semibold text-slate-300 mb-3"><i class="fa-solid fa-triangle-exclamation text-rose-500"></i> Future Decryption Threat Warning</h3>
+              <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                Hackers are copying and saving encrypted bank communication logs today ("Harvesting"). Even though they can't read them yet, they plan to use super-powerful future computers (quantum computers) to unlock and read all of these stolen messages later ("Decrypting").
+              </p>
+              <div class="bg-rose-950/20 border border-rose-900/40 rounded p-3 text-[11px] text-rose-300 font-mono">
+                <i class="fa-solid fa-circle-exclamation mr-1"></i> ACTIVE DANGER: Weak keys and old security settings found on the SWIFT Money Gateway.
+              </div>
+            </div>
+            
+            <button class="w-full bg-cyan-700 hover:bg-cyan-600 text-xs text-slate-100 font-mono font-bold py-2 rounded transition mt-4 btn-trigger-mitigation" data-action="Rotate Certificates" data-target="DEV-SWIFT-SRV">
+              UPGRADE SWIFT GATEWAY TO NEXT-GEN LOCKS
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 5: AI COPILOT CHAT -->
+      <section id="view-copilot" class="dashboard-view">
+        <h2 class="text-2xl font-bold mb-2">AI Security Assistant Chat</h2>
+        <p class="text-sm text-slate-400 mb-6 font-mono">CHAT WITH THE AI ASSISTANT TO ASK QUESTIONS ABOUT THE BANK'S SECURITY</p>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <div class="glass-panel p-6 lg:col-span-3">
+            <div class="copilot-terminal glass-panel">
+              <div class="terminal-messages" id="copilot-messages">
+                <div class="text-slate-500 text-xs mb-4">-- SentinelX Agentic Engine Init... Status: Sync'd with Graph Model. --</div>
+                <div class="text-slate-400 mb-2">
+                  <span class="text-cyan-400 font-bold">[SentinelX]</span> Hello. I can help track ongoing hacks, check security rules compliance, and explain alert details. Ask me anything in normal English.
+                </div>
+              </div>
+              
+              <div class="terminal-input-container">
+                <span class="terminal-prompt">copilot&gt;</span>
+                <input type="text" id="copilot-input" class="terminal-input" placeholder="Ask me a question... (e.g., 'Show me any transactions affected by hacked devices.')" autofocus>
+                <button id="btn-copilot-submit" class="bg-cyan-950/50 hover:bg-cyan-900/50 border border-cyan-800/60 px-3 py-1 text-xs rounded text-cyan-400 font-mono font-semibold transition ml-2">SEND</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-panel p-6 flex flex-col justify-between">
+            <div>
+              <h3 class="text-xs uppercase tracking-widest font-mono text-slate-500 mb-3">Quick Queries</h3>
+              <ul class="space-y-2 text-xs font-mono">
+                <li>
+                  <button class="w-full text-left p-2.5 bg-slate-900 hover:border-blue-500 border border-slate-800 rounded text-slate-300 transition quick-query-btn">
+                    "Show me transfers affected by hacked devices."
+                  </button>
+                </li>
+                <li>
+                  <button class="w-full text-left p-2.5 bg-slate-900 hover:border-blue-500 border border-slate-800 rounded text-slate-300 transition quick-query-btn">
+                    "Check for weak keys and future decryption risks."
+                  </button>
+                </li>
+                <li>
+                  <button class="w-full text-left p-2.5 bg-slate-900 hover:border-blue-500 border border-slate-800 rounded text-slate-300 transition quick-query-btn">
+                    "Check if we comply with central banking security guidelines."
+                  </button>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="text-[10px] text-slate-500 font-mono border-t border-slate-800/80 pt-4 leading-relaxed">
+              AI is used exclusively for summarizing incidents and suggesting steps, avoiding mathematical or scoring errors.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 6: AUTONOMOUS ACTIONS & AUDITS -->
+      <section id="view-actions" class="dashboard-view">
+        <h2 class="text-2xl font-bold mb-2">Automatic Security Action Center</h2>
+        <p class="text-sm text-slate-400 mb-6 font-mono">AUTOMATIC EMERGENCY ACTIONS & COMPLETED LOGS</p>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          <div class="glass-panel p-6 lg:col-span-1 space-y-4">
+            <h3 class="text-md font-semibold text-slate-300"><i class="fa-solid fa-shield mr-1.5 text-rose-500"></i> Safety Orchestrator</h3>
+            <p class="text-xs text-slate-400">
+              SentinelX can automatically isolate systems or block hackers instantly. Every action is permanently recorded in the security logs.
+            </p>
+            
+            <div class="space-y-2">
+              <div class="p-3 bg-rose-950/20 border border-rose-900/30 rounded flex justify-between items-center">
+                <span class="text-xs font-mono font-bold text-rose-300">Freeze Bank Account</span>
+                <button class="bg-rose-900 hover:bg-rose-800 text-slate-200 text-[10px] font-mono py-1 px-2.5 rounded transition btn-trigger-mitigation" data-action="Freeze Account" data-target="ACC-581920">TRIGGER</button>
+              </div>
+              <div class="p-3 bg-amber-950/20 border border-amber-900/30 rounded flex justify-between items-center">
+                <span class="text-xs font-mono font-bold text-amber-300">Block VPN Login Profile</span>
+                <button class="bg-amber-900 hover:bg-amber-800 text-slate-200 text-[10px] font-mono py-1 px-2.5 rounded transition btn-trigger-mitigation" data-action="Disable VPN" data-target="DEV-SECOPS-01">TRIGGER</button>
+              </div>
+              <div class="p-3 bg-blue-950/20 border border-blue-900/30 rounded flex justify-between items-center">
+                <span class="text-xs font-mono font-bold text-blue-300">Replace Security Keys</span>
+                <button class="bg-blue-900 hover:bg-blue-800 text-slate-200 text-[10px] font-mono py-1 px-2.5 rounded transition btn-trigger-mitigation" data-action="Rotate Certificates" data-target="CERT-SWIFT-TLS">TRIGGER</button>
+              </div>
+              <div class="p-3 bg-slate-900 border border-slate-800 rounded flex justify-between items-center">
+                <span class="text-xs font-mono font-bold text-slate-300">Block Attacker IP Address</span>
+                <button class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-[10px] font-mono py-1 px-2.5 rounded transition btn-trigger-mitigation" data-action="Block IP" data-target="185.220.101.5">TRIGGER</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-panel p-6 lg:col-span-2 flex flex-col">
+            <h3 class="text-md font-semibold text-slate-300 mb-4"><i class="fa-solid fa-list-check mr-1.5 text-blue-400"></i> Automatic Security Action History</h3>
+            <div class="overflow-y-auto flex-1 max-h-72">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr class="border-b border-slate-800 text-slate-500 font-mono">
+                    <th class="py-2 px-3">Time</th>
+                    <th class="py-2 px-3">Emergency Action</th>
+                    <th class="py-2 px-3">Target Details</th>
+                    <th class="py-2 px-3">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="audit-logs-table-body" class="divide-y divide-slate-800/40">
+                  <!-- Loaded dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Main UI JS logic -->
+  <script src="js/app.js"></script>
+</body>
+</html>
