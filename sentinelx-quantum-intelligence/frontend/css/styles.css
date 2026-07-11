@@ -1,0 +1,287 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --bg-darker: #05070f;
+  --bg-dark: #0a0d1a;
+  --bg-card: rgba(16, 22, 40, 0.7);
+  --border-glow: rgba(59, 130, 246, 0.2);
+  --border-glow-active: rgba(239, 68, 68, 0.4);
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --neon-blue: #00e5ff;
+  --neon-green: #39ff14;
+  --neon-red: #ff3838;
+  --neon-amber: #ffb300;
+  --font-sans: 'Outfit', sans-serif;
+  --font-mono: 'Fira Code', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-darker);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  height: 100vh;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-darker);
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Glassmorphism card utility */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glow);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.3s ease;
+}
+
+.glass-panel:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(59, 130, 246, 0.1);
+}
+
+.glass-panel.threat-glow {
+  border-color: var(--border-glow-active);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.15);
+}
+
+/* Navigation Layout */
+.app-container {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  height: 100vh;
+  width: 100vw;
+}
+
+.sidebar {
+  background-color: var(--bg-dark);
+  border-right: 1px solid var(--border-glow);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+}
+
+.sidebar-header h1 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, #00e5ff 0%, #39ff14 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sidebar-logo {
+  width: 32px;
+  height: 32px;
+  background: radial-gradient(circle, var(--neon-blue) 0%, rgba(0,0,0,0) 70%);
+  border: 2px solid var(--neon-blue);
+  border-radius: 50%;
+  animation: pulse-glow 2s infinite alternate;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover, .nav-item.active {
+  color: var(--text-primary);
+  background-color: rgba(59, 130, 246, 0.15);
+  border-left: 3px solid var(--neon-blue);
+}
+
+/* Main Workspace area */
+.workspace {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.top-bar {
+  height: 70px;
+  border-bottom: 1px solid var(--border-glow);
+  background-color: var(--bg-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+
+.dashboard-view {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+  display: none;
+}
+
+.dashboard-view.active {
+  display: block;
+}
+
+/* Cyber Dashboard Components */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.metric-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.metric-value {
+  font-size: 2rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+}
+
+.metric-value.neon-green { color: var(--neon-green); text-shadow: 0 0 10px rgba(57, 255, 20, 0.3); }
+.metric-value.neon-red { color: var(--neon-red); text-shadow: 0 0 10px rgba(255, 56, 56, 0.3); }
+.metric-value.neon-blue { color: var(--neon-blue); text-shadow: 0 0 10px rgba(0, 229, 255, 0.3); }
+.metric-value.neon-amber { color: var(--neon-amber); text-shadow: 0 0 10px rgba(255, 179, 0, 0.3); }
+
+/* Live Network Graph container */
+#graph-container {
+  height: 500px;
+  width: 100%;
+  border-radius: 8px;
+  background-color: rgba(5, 7, 15, 0.95);
+  position: relative;
+  border: 1px solid rgba(59, 130, 246, 0.15);
+}
+
+.graph-overlay-status {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 10;
+  background: rgba(10, 13, 26, 0.85);
+  border: 1px solid var(--neon-blue);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+/* Copilot Chat Terminal */
+.copilot-terminal {
+  height: 400px;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #1e293b;
+}
+
+.terminal-messages {
+  padding: 1.5rem;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  background-color: rgba(5, 7, 15, 0.9);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.terminal-input-container {
+  background-color: #0f172a;
+  border-top: 1px solid #1e293b;
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+}
+
+.terminal-prompt {
+  color: var(--neon-green);
+  margin-right: 0.75rem;
+  font-family: var(--font-mono);
+  font-weight: bold;
+}
+
+.terminal-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+/* Animation utilities */
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 5px var(--neon-blue);
+  }
+  100% {
+    box-shadow: 0 0 18px var(--neon-blue), 0 0 5px var(--neon-blue) inset;
+  }
+}
+
+.badge {
+  padding: 0.25rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge-critical { background-color: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
+.badge-high { background-color: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #f59e0b; }
+.badge-medium { background-color: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #3b82f6; }
+.badge-low { background-color: rgba(75, 85, 99, 0.2); color: #9ca3af; border: 1px solid #4b5563; }

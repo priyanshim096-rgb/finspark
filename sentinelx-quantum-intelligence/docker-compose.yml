@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: sentinelx-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - SECRET_KEY=compose-sec-key-value-2026
+    volumes:
+      - ./backend:/app
+    restart: always
+
+  frontend:
+    build: ./frontend
+    container_name: sentinelx-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: always
